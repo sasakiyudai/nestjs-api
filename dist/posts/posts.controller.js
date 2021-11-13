@@ -17,6 +17,7 @@ const posts_service_1 = require("./posts.service");
 const createPost_dto_1 = require("./dto/createPost.dto");
 const updatePost_dto_1 = require("./dto/updatePost.dto");
 const jwt_authentication_guard_1 = require("../authentication/jwt-authentication.guard");
+const findOneParams_1 = require("../utils/findOneParams");
 let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
@@ -24,7 +25,7 @@ let PostsController = class PostsController {
     getAllPosts() {
         return this.postsService.getAllPosts();
     }
-    getPostById(id) {
+    getPostById({ id }) {
         return this.postsService.getPostById(Number(id));
     }
     async createPost(post) {
@@ -45,9 +46,9 @@ __decorate([
 ], PostsController.prototype, "getAllPosts", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [findOneParams_1.default]),
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "getPostById", null);
 __decorate([

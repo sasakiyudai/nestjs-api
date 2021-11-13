@@ -3,6 +3,7 @@ import PostsService from './posts.service';
 import CreatePostDto from './dto/createPost.dto';
 import UpdatePostDto from './dto/updatePost.dto';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
+import FindOneParams from 'src/utils/findOneParams';
 
 @Controller('posts')
 export default class PostsController {
@@ -16,9 +17,9 @@ export default class PostsController {
   }
  
   @Get(':id')
-  getPostById(@Param('id') id: string) {
-    return this.postsService.getPostById(Number(id));
-  }
+getPostById(@Param() { id }: FindOneParams) {
+  return this.postsService.getPostById(Number(id));
+}
  
   @Post()
   @UseGuards(JwtAuthenticationGuard)

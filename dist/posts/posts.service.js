@@ -16,6 +16,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const post_entity_1 = require("./post.entity");
 const typeorm_2 = require("typeorm");
+const postNotFound_exception_1 = require("./exceptions/postNotFound.exception");
 let PostsService = class PostsService {
     constructor(postsRepository) {
         this.postsRepository = postsRepository;
@@ -28,7 +29,7 @@ let PostsService = class PostsService {
         if (post) {
             return post;
         }
-        throw new common_1.HttpException('Post not found', common_1.HttpStatus.NOT_FOUND);
+        throw new postNotFound_exception_1.default(id);
     }
     async updatePost(id, post) {
         await this.postsRepository.update(id, post);
@@ -36,7 +37,7 @@ let PostsService = class PostsService {
         if (updatedPost) {
             return updatedPost;
         }
-        throw new common_1.HttpException('Post not found', common_1.HttpStatus.NOT_FOUND);
+        throw new postNotFound_exception_1.default(id);
     }
     async createPost(post) {
         const newPost = await this.postsRepository.create(post);
@@ -46,7 +47,7 @@ let PostsService = class PostsService {
     async deletePost(id) {
         const deleteResponse = await this.postsRepository.delete(id);
         if (!deleteResponse.affected) {
-            throw new common_1.HttpException('Post not found', common_1.HttpStatus.NOT_FOUND);
+            throw new postNotFound_exception_1.default(id);
         }
     }
 };
