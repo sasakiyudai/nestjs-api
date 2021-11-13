@@ -16,6 +16,7 @@ const common_1 = require("@nestjs/common");
 const posts_service_1 = require("./posts.service");
 const createPost_dto_1 = require("./dto/createPost.dto");
 const updatePost_dto_1 = require("./dto/updatePost.dto");
+const jwt_authentication_guard_1 = require("../authentication/jwt-authentication.guard");
 let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
@@ -29,11 +30,11 @@ let PostsController = class PostsController {
     async createPost(post) {
         return this.postsService.createPost(post);
     }
-    async replacePost(id, post) {
-        return this.postsService.replacePost(Number(id), post);
+    async updatePost(id, post) {
+        return this.postsService.updatePost(Number(id), post);
     }
     async deletePost(id) {
-        this.postsService.deletePost(Number(id));
+        return this.postsService.deletePost(Number(id));
     }
 };
 __decorate([
@@ -51,6 +52,7 @@ __decorate([
 ], PostsController.prototype, "getPostById", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createPost_dto_1.default]),
@@ -63,7 +65,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, updatePost_dto_1.default]),
     __metadata("design:returntype", Promise)
-], PostsController.prototype, "replacePost", null);
+], PostsController.prototype, "updatePost", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

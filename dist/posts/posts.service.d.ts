@@ -1,16 +1,13 @@
 import CreatePostDto from './dto/createPost.dto';
-import Post from './post.interface';
 import UpdatePostDto from './dto/updatePost.dto';
+import Post from './post.entity';
+import { Repository } from 'typeorm';
 export default class PostsService {
-    private lastPostId;
-    private posts;
-    getAllPosts(): Post[];
-    getPostById(id: number): Post;
-    replacePost(id: number, post: UpdatePostDto): UpdatePostDto;
-    createPost(post: CreatePostDto): {
-        content: string;
-        title: string;
-        id: number;
-    };
-    deletePost(id: number): void;
+    private postsRepository;
+    constructor(postsRepository: Repository<Post>);
+    getAllPosts(): Promise<Post[]>;
+    getPostById(id: number): Promise<Post>;
+    updatePost(id: number, post: UpdatePostDto): Promise<Post>;
+    createPost(post: CreatePostDto): Promise<Post>;
+    deletePost(id: number): Promise<void>;
 }

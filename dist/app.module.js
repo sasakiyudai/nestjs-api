@@ -8,12 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const posts_module_1 = require("./posts/posts.module");
+const Joi = require("@hapi/joi");
+const database_module_1 = require("./database/database.module");
+const authentication_module_1 = require("./authentication/authentication.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [posts_module_1.PostsModule],
+        imports: [posts_module_1.PostsModule, config_1.ConfigModule.forRoot({
+                validationSchema: Joi.object({
+                    POSTGRES_HOST: Joi.string().required(),
+                    POSTGRES_PORT: Joi.number().required(),
+                    POSTGRES_USER: Joi.string().required(),
+                    POSTGRES_PASSWORD: Joi.string().required(),
+                    POSTGRES_DB: Joi.string().required(),
+                    PORT: Joi.number(),
+                    JWT_SECRET: Joi.string().required(),
+                    JWT_EXPIRATION_TIME: Joi.string().required(),
+                })
+            }),
+            database_module_1.DatabaseModule,
+            authentication_module_1.AuthenticationModule,
+        ],
         controllers: [],
         providers: [],
     })
