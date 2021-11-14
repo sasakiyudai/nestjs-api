@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const class_transformer_1 = require("class-transformer");
 let User = class User {
 };
 __decorate([
@@ -26,6 +27,7 @@ __decorate([
 ], User.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, class_transformer_1.Exclude)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 User = __decorate([
